@@ -1,0 +1,74 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <br />
+                    <div class="col-md-8">
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#newChannelModal">
+                            <span class="glyphicon glyphicon-plus"></span> New channel
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button"
+                                        class="btn btn-info">
+                                    <span class="glyphicon glyphicon-eye-open"></span> Subscribe channel
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button"
+                                        class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete channel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="channel in channels track by $index">
+                        <td class="col-md-1" ng-bind="channel.id"></td>
+                        <td class="col-md-1" ng-bind="channel.name"></td>
+                        <td class="col-md-1">
+                            <button type="button"
+                                    class="btn btn-success"
+                                    ng-click="go('/channels/' + channel.id)">
+                                <span class="glyphicon glyphicon-circle-arrow-right"></span> View
+                            </button>
+                            <button type="button"
+                                    class="btn btn-info"
+                                    ng-click="subscribe(channel)"
+                                    ng-show="subscribedChannels.indexOf(channel) == -1">
+                                <span class="glyphicon glyphicon-eye-open"></span> Subscribe
+                            </button>
+                            <span ng-show="subscribedChannels.indexOf(channel) != -1">
+                                <span class="glyphicon glyphicon-ok"></span> Subscribed
+                            </span>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    ng-click="deleteChannel(channel)">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-include="'Views/Partials/NewChannelModal.html'"></div>

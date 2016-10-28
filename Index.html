@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html ng-app="mainModule">
 <head>
-    <title>AngularBaseApp</title>
+    <title>Projektuppgift</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta charset="utf-8" />
@@ -10,13 +10,15 @@
 <body ng-controller="MainController">
     <header ng-include="'Views/Partials/Navbar.html'"></header>
 
-    <main class="container-fluid no-whitespace" ng-view></main>
+    <main class="container-fluid" ng-view></main>
 
     <!-- 3rd party libs and frameworks -->
-    <script src="Scripts/jquery-3.1.0.min.js"></script>
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.1.js"></script>
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/angular-signalr-hub.js"></script>
 
     <!-- Module -->
     <script src="Scripts/Modules/module.js"></script>
@@ -24,8 +26,22 @@
     <!-- Route -->
     <script src="Scripts/Routes/route.js"></script>
 
+    <!-- Components -->
+
+    <!-- Filters -->
+
+    <!-- Directives -->
+    <script src="Scripts/Directives/Messages-Element/messages-element.directive.js"></script>
+    <script src="Scripts/Directives/Input-Message/input-message.directive.js"></script>
+
+    <!-- Services -->
+    <script src="Scripts/Services/channels-api.service.js"></script>
+
     <!-- Controllers -->
     <script src="Scripts/Controllers/main.controller.js"></script>
     <script src="Scripts/Controllers/home.controller.js"></script>
+    <script src="Scripts/Controllers/channel.controller.js"></script>
+    <script src="Scripts/Controllers/subscriptions.controller.js"></script>
+    <script src="Scripts/Controllers/admin.controller.js"></script>
 </body>
 </html>
