@@ -7,8 +7,12 @@
         </div>
         <div class="row">
             <div class="col-md-9 col-md-offset-3">
-                <div class="row" ng-repeat="message in channel.messages track by $index">
-                    <messages-element></messages-element>
+                <div class="row">
+                    <div class="col-md-7" id="scrollArea" schroll-bottom="channel.messages">
+                        <div class="row messageBody" ng-repeat="message in channel.messages track by $index">
+                            <messages-element></messages-element>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-7">

@@ -27,11 +27,11 @@ angular.module("mainModule")
                     caseInsensitiveMatch: true,
                     activeTab: "Channels"
                 })
-                .when("/Subscriptions", {
-                    templateUrl: "Views/Subscriptions.html",
-                    controller: "SubscriptionsController",
+                .when("/Followings", {
+                    templateUrl: "Views/Following.html",
+                    controller: "FollowingController",
                     caseInsensitiveMatch: true,
-                    activeTab: "Subscriptions"
+                    activeTab: "Followings"
                 })
                 .when("/Admin", {
                     templateUrl: "Views/Admin.html",

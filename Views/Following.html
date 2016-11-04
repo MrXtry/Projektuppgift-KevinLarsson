@@ -1,0 +1,20 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 ng-bind="title"></h1>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 text-center" ng-repeat="followingChannel in feed track by $index">
+                        <img ng-click="go('Channels/' + followingChannel.id)" class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="" />
+                        <h3 ng-bind="followingChannel.name"></h3><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

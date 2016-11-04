@@ -9,23 +9,32 @@ angular.module("mainModule")
             $scope.newChannel = {
                 name: ""
             }
-            $scope.newSubscribe = {}
+            $scope.newFollowing = {}
 
             $scope.addChannel = function () {
                 channelsApi.addChannel($scope.newChannel)
                     .then(function (data) {
                         $scope.channels.push(data);
+                        console.log($scope.channels);
                         $scope.newChannel = {};
                     });
             }
 
-            $scope.subscribe = function (channel) {
-                //$scope.newSubscribe.id = channel.id;
-                //$scope.newSubscribe.name = channel.name;
-                $scope.subscribedChannels.push(channel);
+            $scope.follow = function (id) {
+                $scope.followingChannels.push(id);
 
-                $scope.saveSubscribedChannels();
+                $scope.saveFollowingChannels();
             };
+
+            $scope.unfollow = function (id) {
+                var index = $scope.followingChannels.indexOf(id);
+                $scope.followingChannels.splice(index, 1);
+
+                $scope.getFeed();
+                $scope.saveFollowingChannels();
+            }
+
+            $scope.getFeed();
 
             $scope.deleteChannel = function (channel) {
                 channelsApi.deleteChannel(channel.id)

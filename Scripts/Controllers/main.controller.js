@@ -9,16 +9,40 @@ angular.module("mainModule")
         "Hub",
         "$timeout",
         "$rootScope",
-        function ($scope, $location, $route, channelsApi, Hub, $rootScope, $timeout) {
+        function ($scope, $location, $route, channelsApi, Hub, $timeout, $rootScope) {
             $scope.$route = $route;
             $scope.channels = [];
-            //var path = "http://dummyapi.kodalagom.se/signalr";
-            $scope.hub = null;
-            $scope.hubFunction = function (path, hubname){
-                $scope.hub = new Hub(hubname, {
+            $scope.followingChannels = [];
+            $scope.feed = [];
+
+            $scope.getFeed = function () {
+                $scope.feed = $scope.channels.filter(function (channel) {
+                    return $scope.followingChannels.indexOf(channel.id) != -1;
+                });
+            }
+
+            $scope.loadFollowingChannels = function () {
+                var dataString = localStorage.getItem("followingChannels");
+                if (dataString)
+                    $scope.followingChannels = JSON.parse(dataString);
+            }
+
+            $scope.saveFollowingChannels = function () {
+                var jsonString = JSON.stringify($scope.followingChannels);
+                localStorage.setItem("followingChannels", jsonString);
+            }
+
+            var getMessages = function (path, hubname) {
+                var hub = null;
+                hub = new Hub(hubname, {
                     listeners: {
                         'recieveMessage': function (message) {
-                            console.log(message);
+                            var index = $scope.channels.map(function (channel) {
+                                return channel.id;
+                            }).indexOf(message.channelId);
+                            
+                            $scope.channels[index].messages.push(message);
+                            $rootScope.$apply();
                         }
                     },
                     rootPath: path,
@@ -26,72 +50,39 @@ angular.module("mainModule")
                     errorHandler: function (error) {
                         console.error(error);
                     },
-
                     stateChanged: function (state) {
                         switch (state.newState) {
                             case $.signalR.connectionState.connecting:
-                                //your code here
+                                console.log("Connecting");
                                 break;
                             case $.signalR.connectionState.connected:
-                                //your code here
+                                console.log("Connected");
                                 break;
                             case $.signalR.connectionState.reconnecting:
-                                //your code here
+                                console.log("Reconnecting");
                                 break;
                             case $.signalR.connectionState.disconnected:
-                                //your code here
+                                console.log("Disconnected");
                                 break;
                         }
                     }
                 });
-            }
+            };
 
-            //$scope.chatDataHub = channelsHub('http://dummyapi.kodalagom.se', 'chatHub');
-
-            //$scope.chatDataHub.on('recieveMessage', function (data) {
-            //    console.log(data);
-            //    data.forEach(function (dataItem) {
-            //        console.log(dataItem);
-            //    });
-            //});
-
-
-            $scope.subscribedChannels = [];
-
-            $scope.loadSubscribedChannels = function () {
-                var dataString = localStorage.getItem("subscribedChannels");
-                if (dataString)
-                    $scope.subscribedChannels = JSON.parse(dataString);
-            }
-
-            $scope.saveSubscribedChannels = function () {
-                var jsonString = JSON.stringify($scope.subscribedChannels);
-                localStorage.setItem("subscribedChannels", jsonString);
-            }
-
-            //var poll = function () {
-            //    $timeout(function () {
-            //        channelsApi.getChannels()
-            //            .then(function (data) {
-            //                if (data != null)
-            //                    $scope.channels = data;
-            //            });
-            //        poll();
-            //    }, 1000);
-            //};
-
-            channelsApi.getChannels()
+            var getChannels = function () {
+                channelsApi.getChannels()
                 .then(function (data) {
                     if (data != null)
                         $scope.channels = data;
                 });
+            };
 
             $scope.go = function (url) {
                 $location.path(url);
             };
 
-            $scope.loadSubscribedChannels();
-            $scope.hubFunction("http://dummyapi.kodalagom.se/signalr", "chatHub");
-            //poll();
+            getChannels();
+            $scope.loadFollowingChannels();
+            getMessages("http://dummyapi.kodalagom.se/signalr", "chatHub");
         }
     ]);

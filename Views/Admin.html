@@ -4,29 +4,13 @@
             <div class="col-md-12">
                 <div class="row">
                     <br />
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <button type="button"
                                 class="btn btn-primary"
                                 data-toggle="modal"
                                 data-target="#newChannelModal">
                             <span class="glyphicon glyphicon-plus"></span> New channel
                         </button>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button type="button"
-                                        class="btn btn-info">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Subscribe channel
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button"
-                                        class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> Delete channel
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <hr />
@@ -51,13 +35,16 @@
                             </button>
                             <button type="button"
                                     class="btn btn-info"
-                                    ng-click="subscribe(channel)"
-                                    ng-show="subscribedChannels.indexOf(channel) == -1">
-                                <span class="glyphicon glyphicon-eye-open"></span> Subscribe
+                                    ng-click="follow(channel.id)"
+                                    ng-show="followingChannels.indexOf(channel.id) == -1">
+                                <span class="glyphicon glyphicon-eye-open"></span> Follow
                             </button>
-                            <span ng-show="subscribedChannels.indexOf(channel) != -1">
-                                <span class="glyphicon glyphicon-ok"></span> Subscribed
-                            </span>
+                            <button type="button"
+                                    class="btn btn-warning"
+                                    ng-click="unfollow(channel.id)"
+                                    ng-show="followingChannels.indexOf(channel.id) != -1">
+                                <span class="glyphicon glyphicon-eye-close"></span> Unfollow
+                            </button>
                             <button type="button"
                                     class="btn btn-danger"
                                     ng-click="deleteChannel(channel)">

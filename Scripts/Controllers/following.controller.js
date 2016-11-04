@@ -1,9 +1,11 @@
 ﻿/// <reference path="../angular.js" />
 
 angular.module("mainModule")
-    .controller("SubscriptionsController", [
+    .controller("FollowingController", [
         "$scope",
         function ($scope) {
-            $scope.title = "Subscriptions";
+            $scope.title = "Following";
+
+            $scope.getFeed();
         }
     ]);
